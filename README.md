@@ -2,7 +2,7 @@
 ## Used code
   -HTML
   -Bootstrap - form class
-  -Django Database to save data of form
+  -DMongoDB Database
   
 ## Code
   In url of page when we add 'admin' in browser then it redirects to portal admin page where we need to sign in with username and password.
