@@ -10,8 +10,9 @@
 
         <div class="d-flex p-2">
             <nav class="nav">
-                <a class="nav-link active" aria-current="page" href="/form/">Create</a>
-                <a class="nav-link" href="/table/">Users</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'form' %}">Create</a>
+                <a class="nav-link" href="{% url 'table' %}">Users</a>
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </nav>
         </div>
         {% block content %}

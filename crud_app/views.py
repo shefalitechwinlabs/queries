@@ -17,7 +17,6 @@ def form(request):
         zipcode = request.POST["zipcode"]
         p = Practice(fullname=name,phonenumber=phone,address=address,zipcode=zipcode)
         p.save()
-
     return render(request, 'form.html')
 
 
