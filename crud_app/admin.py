@@ -1,6 +1,14 @@
 from django.contrib import admin
-from .models import Practice
- 
-@admin.register(Practice)
+from crud_app.models import Author, Entry, Blog
+
+@admin.register(Blog)
 class RequestDemoAdmin(admin.ModelAdmin):
-  list_display = ['fullname', 'phonenumber','address', 'zipcode']
+  list_Author = ['blog_name','tagline']
+
+@admin.register(Author)
+class RequestDemoAdmin(admin.ModelAdmin):
+  list_Publisher = ['author_name','email']
+
+@admin.register(Entry)
+class RequestDemoAdmin(admin.ModelAdmin):
+  list_Books = ['blog', 'headline', 'body_text', 'pub_date','mod_date', 'authors', 'number_of_comments', 'number_of_pingbacks', 'ratings']

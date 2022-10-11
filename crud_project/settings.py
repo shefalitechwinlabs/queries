@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crud_app',
-    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +76,7 @@ WSGI_APPLICATION = 'crud_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE':'djongo',
         'NAME': 'db-crud',
     }
 }
@@ -123,5 +122,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOGIN_REDIRECT_URL = 'home'
