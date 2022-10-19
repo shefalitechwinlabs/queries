@@ -22,6 +22,8 @@ def signup(request):
 
 
 def login(request):
+    if "username" in request.session:
+        return redirect('home/')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -33,9 +35,6 @@ def login(request):
         else:
             context = {'error':'Username or password is incorrect!'}
             return render (request,'login.html', context)
-        
-    if "username" in request.session:
-        return redirect('home/')
     else:
         return render(request,'login.html')
   

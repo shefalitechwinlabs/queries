@@ -1,61 +1,63 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from crud_app.models import Entry,Blog,Author
+from crud_app.models import *
 from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
 from django.template import loader
+from django.contrib.auth.models import User
+
 
 def home(request):
-    return render(request, 'home.html')
-
+    if 'username' in request.session:
+        return render(request, 'home.html')
+    else:
+        return redirect('/')
 
 def form(request):
-
-    if request.method=="POST":
-        author_name = request.POST["author_name"]
-        blog_name = request.POST["blog_name"]
-        tagline = request.POST["tagline"]
-        email = request.POST["email"]
-        headline = request.POST["headline"]
-        body_text = request.POST["body_text"]
-        mod_date = request.POST["mod_date"]
-        number_of_comments = request.POST["number_of_comments"]
-        pub_date = request.POST["pub_date"]
-        number_of_pingbacks = request.POST["number_of_pingbacks"]
-        ratings = request.POST["ratings"]
-        B = Blog(name=blog_name,tagline=tagline)
-        B.save()
-        A = Author(name=author_name,email=email)
-        A.save()
-        E = Entry(blog=B,headline=headline,body_text=body_text,mod_date=mod_date,number_of_comments=number_of_comments,pub_date=pub_date,number_of_pingbacks=number_of_pingbacks)
-        E.save()
-        E.authors.add(A)
-        E.save()
-    return render(request, 'form.html')
+    if 'username' in request.session:
+        if request.method=="POST":
+            author_name = request.POST["author_name"]
+            blog_name = request.POST["blog_name"]
+            tagline = request.POST["tagline"]
+            theme = request.POST["theme"]
+            email = request.POST["email"]
+            headline = request.POST["headline"]
+            body_text = request.POST["body_text"]
+            mod_date = request.POST["mod_date"]
+            number_of_comments = request.POST["number_of_comments"]
+            pub_date = request.POST["pub_date"]
+            number_of_pingbacks = request.POST["number_of_pingbacks"]
+            rating = request.POST["rating"]
+            created_by = request.user
+            
+            A = Author(author_name=author_name,email=email,created_by=created_by)
+            A.save()
+            TB = ThemeBlog(blog_name=blog_name,tagline=tagline,theme=theme,created_by=A)
+            TB.save()
+            E = Entry(blog=TB,headline=headline,body_text=body_text,mod_date=mod_date,rating=rating,created_by=created_by,number_of_comments=number_of_comments,pub_date=pub_date,number_of_pingbacks=number_of_pingbacks)
+            E.save()
+            E.authors.add(A)
+            E.save()
+        return render(request, 'form.html')
+    else:
+        return redirect('/')
 
 
 
 def table(request):
-    context ={}
-    context["Entry"] = Entry.objects.all()
-    context["Blog"] = Blog.objects.all()
-    context["Author"] = Author.objects.all()
-    
+    user = request.user
+    entry = Entry.objects.filter(created_by=user)
+    for i in entry:
+        print(i.authors)
+        
+    context = {'entry':entry}
+
     return render(request, 'table.html', context)
-
-
-
 
 def delete(request,id):
    
     obj = get_object_or_404(Entry, id = id)
-    
-    if request.method =="POST":
-        # delete object
-        obj.delete()
-        return HttpResponseRedirect("/table/")
-    
-    return render(request, "delete.html")
-
+    obj.delete()
+    return redirect("/home/table/")
 
 
 def update_table(request, id):
