@@ -6,16 +6,17 @@ from django.template import loader
 from django.contrib.auth.models import User
 
 
+
 def home(request):
     if 'username' in request.session:
-        return render(request, 'home.html')
+        return render(request, 'main/home.html')
     else:
         return redirect('/')
 
 def form(request):
     if 'username' in request.session:
         if request.method=="POST":
-            author_name = request.POST["author_name"]
+            #author_name = request.POST.get("author_name")
             blog_name = request.POST["blog_name"]
             tagline = request.POST["tagline"]
             theme = request.POST["theme"]
@@ -29,7 +30,7 @@ def form(request):
             rating = request.POST["rating"]
             created_by = request.user
             
-            A = Author(author_name=author_name,email=email,created_by=created_by)
+            A = Author(email=email,created_by=created_by)
             A.save()
             TB = ThemeBlog(blog_name=blog_name,tagline=tagline,theme=theme,created_by=A)
             TB.save()
@@ -37,7 +38,7 @@ def form(request):
             E.save()
             E.authors.add(A)
             E.save()
-        return render(request, 'form.html')
+        return render(request, 'main/form.html')
     else:
         return redirect('/')
 
@@ -51,7 +52,7 @@ def table(request):
         
     context = {'entry':entry}
 
-    return render(request, 'table.html', context)
+    return render(request, 'main/table.html', context)
 
 def delete(request,id):
    
@@ -63,6 +64,7 @@ def delete(request,id):
 def update_table(request, id):
     
     objects = get_object_or_404(Entry,id=id) 
+    
 
     if request.method=="POST":
         author_name = request.POST["author_name"]
@@ -86,9 +88,9 @@ def update_table(request, id):
         objects.pub_date = pub_date
         objects.number_of_pingbacks = number_of_pingbacks
         objects.save()
-        return HttpResponseRedirect("/table/")
+        return HttpResponseRedirect("/home/table")
     
     data = {}
-    data["dataset"] = Entry.objects.all().filter(id=id)
+    data["dataset"] = objects
     
-    return render(request, "update.html", data)
+    return render(request, "main/update.html", data)

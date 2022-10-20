@@ -4,22 +4,21 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import auth
-
+from .signals import mysignal
+from .forms import SignupForm
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-
             messages.success(request, f'Your account has been created. You can log in now!')    
             return redirect('login')
     else:
-        form = UserCreationForm()
-
+        form = SignupForm()
+    mysignal.send(sender=SignupForm)
     context = {'form': form}
-    return render(request, 'signup.html', context)
-
+    return render(request, 'authentication/signup.html', context)
 
 def login(request):
     if "username" in request.session:
@@ -36,7 +35,7 @@ def login(request):
             context = {'error':'Username or password is incorrect!'}
             return render (request,'login.html', context)
     else:
-        return render(request,'login.html')
+        return render(request,'authentication/login.html')
   
   
 
@@ -44,4 +43,4 @@ def logout(request):
     auth.logout(request)
     username = request.session.get('username')
     del username
-    return render (request, 'logout.html')
+    return render (request, 'authentication/logout.html')

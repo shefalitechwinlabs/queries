@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<!--{{ data.dataset }}-->
+<!--{{ obj }}-->
+<div class="container">
+    <form method = "post" >
+        
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Author Name</label>
+            {% for i in dataset.authors.all %}
+            <input type="text" value= "{{i.author_name}}" class="form-control" id="exampleInputEmail1" name="author_name">
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Headline</label>
+            <input type="text" value= "{{dataset.headline}}" class="form-control" id="exampleInputEmail1" name="headline">
+        </div>
+        <div class="mb-3">
+            <label for="abc" class="form-label">Blog Name</label>
+            <input type="text" value= "{{dataset.blog.blog_name}}" class="form-control" name="blog_name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Tagline</label>
+            <input type="text" value= "{{dataset.blog.tagline}}" class="form-control" id="exampleInputEmail1" name="tagline">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            {% for i in dataset.authors.all %}
+            <input type="text" value= "{{i.email}}" class="form-control" id="exampleInputEmail1" name="email">
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Body Text</label>
+            <input type="text" value= "{{dataset.body_text}}" class="form-control" id="exampleInputEmail1" name="body_text">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Mod Date</label>
+            <input type="date" value= "{{dataset.mod_date}}" class="form-control" id="exampleInputEmail1" name="mod_date">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Number of Comments</label>
+            <input type="text" value= "{{dataset.number_of_comments}}" class="form-control" id="exampleInputEmail1" name="number_of_comments">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Pub Date</label>
+            <input type="date" value= "{{dataset.pub_date}}" class="form-control" id="exampleInputEmail1" name="pub_date">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Number of Pingbacks</label>
+            <input value= "{{dataset.number_of_pingbacks}}" class="form-control" id="exampleInputEmail1" name="number_of_pingbacks">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Rating</label>
+            <input type="text" value= "{{dataset.rating}}" class="form-control" id="exampleInputEmail1" name="rating">
+        </div>
+        
+        <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+        
+    </form>
+</div>
+{% endblock %}
