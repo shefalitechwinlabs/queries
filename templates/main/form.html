@@ -4,51 +4,16 @@
 <div class="container">
     <form method = "post">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Headline</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="headline">
-        </div>
-        <div class="mb-3">
-            <label for="9876543210" class="form-label">Blog Name</label>
-            <input type="text" class="form-control" name="blog_name">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Tagline</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="tagline">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Theme</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="theme">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="email">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Body Text</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="body_text">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Mod Date</label>
-            <input type="date" class="form-control" id="exampleInputEmail1" name="mod_date">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Number of Comments</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="number_of_comments">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Pub Date</label>
-            <input type="date" class="form-control" id="exampleInputEmail1" name="pub_date">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Number of Pingbacks</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="number_of_pingbacks">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Rating</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="rating">
-        </div>
+        {% if error %}
+            {{error}}
+        {% endif %}
+        {{author.as_p}}
         <button type="submit" class="btn btn-primary" value="submit">Submit</button>
     </form>
+    <form method = "post">
+        {% csrf_token %}
+        {{entry.as_p}}
+        <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+    </form>    
 </div>
 {% endblock %}

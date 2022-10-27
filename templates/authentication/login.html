@@ -1,4 +1,5 @@
-<h3>login</h3>
+{% extends 'authentication/base.html' %}
+{% block content %}
 
 <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
@@ -7,12 +8,10 @@
     <label for="exampleInputEmail1" class="form-label">Username</label>
     <input type="text" class="form-control" id="exampleInputEmail1" name="username">
 
-    
     <label class="form-label">Password</label>
     <input type="password" class="form-control" name="password">
         
     <button type="submit">Login</button>
 </form>
-
-
 <p>Don't have an account? <a href="signup/">Signup here</a></p>
+{% endblock %}

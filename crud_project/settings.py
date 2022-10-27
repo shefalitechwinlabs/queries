@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,9 @@ SECRET_KEY = 'django-insecure--@-1n=&4p%l&-xx3_ly3oszf&zxb1q!+%*dbon@w+iw!^a8@y%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
+AUTH_USER_MODEL = 'authentication.ExtendUser'
 
 # Application definition
 
@@ -37,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #"django_cron",
+    'django_crontab',
     'crud_app',
     'authentication',
+    
 ]
 
 MIDDLEWARE = [
@@ -50,6 +55,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crud_app.cron.MyCronJob')
+]
+
+# CRON_CLASSES = [
+#     "crud_app.cron.MyCronJob",
+# ]
 
 ROOT_URLCONF = 'crud_project.urls'
 
@@ -77,7 +90,7 @@ WSGI_APPLICATION = 'crud_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE':'djongo',
+        'ENGINE':'django.db.backends.sqlite3',
         'NAME': 'db-crud',
     }
 }
@@ -118,6 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
