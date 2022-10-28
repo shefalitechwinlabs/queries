@@ -4,16 +4,8 @@
 <div class="container">
     <form method = "post">
         {% csrf_token %}
-        {% if error %}
-            {{error}}
-        {% endif %}
-        {{author.as_p}}
-        <button type="submit" class="btn btn-primary" value="submit">Submit</button>
-    </form>
-    <form method = "post">
-        {% csrf_token %}
         {{entry.as_p}}
         <button type="submit" class="btn btn-primary" value="submit">Submit</button>
-    </form>    
+    </form> 
 </div>
 {% endblock %}

@@ -10,10 +10,13 @@
 
         <div class="d-flex p-2">
             <nav class="nav">
-                <a class="nav-link active" aria-current="page" href="/home/form/">Create</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-link" href="/home/blogform/">Create Blog</a>
+                <a class="nav-link" href="{% url 'article' %}">My Articles</a>
                 <a class="nav-link" href="{% url 'table' %}">Table</a>
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                
             </nav>
         </div>
         {% block content %}

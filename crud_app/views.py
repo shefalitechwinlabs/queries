@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from crud_app.models import *
+#from crud_app.models import *
 from authentication.models import Profile, ExtendUser
 from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
 from django.template import loader
@@ -21,43 +21,62 @@ def profile(request):
     if 'username' in request.session:
         context = {}
         profile = Profile.objects.get(name=request.user)
-        context = {'dataset': profile}
+        fullname = profile.name.first_name +' '+ profile.name.last_name
+        context = {'dataset': profile, 'fullname': fullname}
         return render(request, 'main/profile.html', context)
 
-def form(request):
-    if 'username' in request.session:
-        if request.method == 'POST':
-            author_form = AuthorForm(request.POST)
-            if author_form.is_valid():
-                author = form.save(commit=False)
-                author.save()
-            else:
-                author_form = AuthorForm()
-                raise validate_google_mail()
-            entry_form = EntryForm(request.POST)
-            if entry_form.is_valid():
-                entry = form.save(commit=False)
-                entry.save()
-            else:
-                entry_form = EntryForm()
-        context = {'entry': EntryForm, 'author': AuthorForm}
-        return render(request, 'main/form.html', context)
-    else:
-        return redirect('/')
+# def authorform(request):
+#     if 'username' in request.session:
+#         context = {}
+#         context = {'author': AuthorForm}
+#         if request.method == 'POST':
+#             author_form = AuthorForm(request.POST)
+#             if author_form.is_valid():
+#                 author = author_form.save(commit=False)
+#                 author.created_by = request.user
+#                 author.save()
+#                 return render(request, 'form/authorform.html', context)
+#             else:
+#                 context['author'] = author_form
+#             return render(request, 'form/authorform.html', context)
+#         return render(request, 'form/authorform.html', context)
+#     else:
+#         return redirect('/')
 
 # def entryform(request):
 #     if 'username' in request.session:
-#         if request.method == 'POST':
-#             form = EntryForm(request.POST.get)
-#             if form.is_valid():
-#                 entry = form.save(commit=False)
-#                 entry.save()
-#             else:
-#                 form = EntryForm()
+#         context = {}
 #         context = {'entry': EntryForm}
-#         return render(request, 'main/form.html', context)
+#         if request.method == 'POST':
+#             entry_form = EntryForm(request.POST)
+#             if entry_form.is_valid():
+#                 entry = entry_form.save(commit=False)
+#                 entry.save()
+#                 return render(request, 'form/entryform.html', context)
+#             else:
+#                 context['entry'] = entry_form
+#             return render(request, 'form/entryform.html', context)
+#         return render(request, 'form/entryform.html', context)
 #     else:
 #         return redirect('/')
+
+def blogform(request):
+    if 'username' in request.session:
+        context = {}
+        context = {'blog': BlogForm}
+        if request.method == 'POST':
+            blog_form = BlogForm(request.POST)
+            if blog_form.is_valid():
+                blog = blog_form.save(commit=False)
+                blog.created_by = request.user
+                blog.save()
+                return render(request, 'form/blogform.html', context)
+            else:
+                context['blog'] = blog_form
+            return render(request, 'form/blogform.html', context)
+        return render(request, 'form/blogform.html', context)
+    else:
+        return redirect('/')
 
 # def authorform(request):
 #     if 'username' in request.session:
@@ -90,23 +109,31 @@ def form(request):
 #     else:
 #         return redirect('/')
 
+def article(request):
+    user =  request.user
+    article =  Blog.objects.get(created_by=user)
+    context = {'article':article}
+    return render(request, 'main/article.html', context)
+
 def table(request):
     user = request.user
-    entry = Entry.objects.filter(created_by=user)    
+    blog = Blog.objects.get(created_by=user)
+    entry = Entry.objects.get(blog=blog)  
+    print(entry)
     context = {'entry':entry,'data':[]}
 
     return render(request, 'main/table.html', context)
 
 def delete(request,id):
    
-    obj = get_object_or_404(Entry, id = id)
+    obj = get_object_or_404(Blog, id = id)
     obj.delete()
     return redirect("/home/table/")
 
 
 def update_table(request, id):
     
-    objects = get_object_or_404(Entry,id=id) 
+    objects = get_object_or_404(Blog,id=id) 
     
 
     if request.method=="POST":
