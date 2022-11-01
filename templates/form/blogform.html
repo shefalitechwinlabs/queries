@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+{% autoescape off %}
 <div class="container">
     <form method = "post">
         {% csrf_token %}
@@ -8,4 +9,5 @@
         <button type="submit" class="btn btn-primary" value="submit">Submit</button>
     </form>   
 </div>
+{% endautoescape %}
 {% endblock %}

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #"django_cron",
     'django_crontab',
-    'crud_app',
+    'crud_app.apps.CrudAppConfig',
     'authentication',
     
 ]
@@ -69,7 +69,7 @@ ROOT_URLCONF = 'crud_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates', 'crud_app/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

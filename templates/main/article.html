@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
 {% block content %}
 <div class="container">
+    <h1>{{article.0.blog_name}}</h1><br>
     <hr>
-    <h1>{{article.blog_name}}</h1><br>
-    <h3>{{article.headline}}</h3><br>
-    <p>{{article.body_text}}</p>
+    <h3>{{article.0.headline}}</h3><br>
+    <p>{{article.0.body_text}}</p>
 </div>
 {% endblock %}

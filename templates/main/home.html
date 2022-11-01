@@ -1,4 +1,10 @@
 {% extends 'main/base.html' %}
+{% load crud_tags %}
+
 {% block content %}
-<h1>Welcome!</h1>
+{% autoescape on %}
+<h1>Hello! {{name}}</h1>
+<p>You have {{value|myfilter}} blog</p>
+{% endautoescape %}
 {% endblock %}
+
