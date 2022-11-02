@@ -13,10 +13,8 @@ def home(request):
     if 'username' in request.session:
         user = request.user
         name = user.first_name+' '+user.last_name
-        blog = Blog.objects.filter(created_by=user)
-        data = blog.values()[3]
-        print(type(data['blog_name']))
-        return render(request, 'main/home.html', {'name':name, 'value':data['blog_name']})
+        user = request.user
+        return render(request, 'main/home.html', {'name':name, 'value': user})
     else:
         return redirect('/')
 

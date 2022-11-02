@@ -1,10 +1,9 @@
 {% extends 'main/base.html' %}
 {% load crud_tags %}
-
 {% block content %}
 {% autoescape on %}
 <h1>Hello! {{name}}</h1>
-<p>You have {{value|myfilter}} blog</p>
+<p>Your number of blogs are {{value|blog_count}}</p>
+<p>Latest Blog: {% show_latest_blog user %} </p>
 {% endautoescape %}
 {% endblock %}
-

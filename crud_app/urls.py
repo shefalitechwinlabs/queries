@@ -3,6 +3,11 @@ from django.urls import path
 
 from . import views
 
+
+admin.site.site_header = 'Welcome to Ashish Portal'
+admin.site.site_title = 'Ashish Portal'
+admin.site.index_title = 'Welcome to the Portal'
+
 urlpatterns = [
 
     path('', views.home, name='home'),

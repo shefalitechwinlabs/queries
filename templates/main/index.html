@@ -1,0 +1,10 @@
+{% autoescape on %}
+{%for blog in blog_obj %}
+    {{blog}}
+{% endfor %}
+updated on
+{%for date in entry_obj %}
+    {{date.pub_date|date:'Y-m-d'}}
+{% endfor %}
+{% endautoescape %}
+
