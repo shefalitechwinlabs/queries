@@ -4,6 +4,8 @@ from crud_app.models import *
 from authentication.models import Profile, ExtendUser
 from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
 from .forms import *
+from django.contrib import messages
+from django.core.paginator import Paginator
 
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
@@ -14,7 +16,7 @@ def home(request):
         user = request.user
         name = user.first_name+' '+user.last_name
         user = request.user
-        return render(request, 'main/home.html', {'name':name, 'value': user})
+        return render(request, 'main/home.html', {'name':name, 'user': user})
     else:
         return redirect('/')
 
@@ -36,9 +38,11 @@ def blogform(request):
                 blog = blog_form.save(commit=False)
                 blog.created_by = request.user
                 blog.save()
+                messages.success(request, 'Blog created successfully')
                 return render(request, 'form/blogform.html', context)
             else:
                 context['blog'] = blog_form
+                messages.error(request, 'Blog not created')
             return render(request, 'form/blogform.html', context)
         return render(request, 'form/blogform.html', context)
     else:
@@ -53,14 +57,20 @@ def article(request, blog_name):
 def table(request):
     user = request.user
     entry = Entry.objects.filter(created_by=user)
-    #blog = Blog.objects.filter(created_by=user)
-    #data = blog, entry
-    context = {'data':entry}
+    paginator = Paginator(entry,15)
+    page_number = request.GET.get('page')
+    print(page_number)
+    try:
+        page_obj = paginator.get_page(page_number)
+    except:
+        page_obj = paginator.page(1)
+    context = { 'page_obj': page_obj}
     return render(request, 'main/table.html', context)
 
 def delete(request,id):
     obj = get_object_or_404(Entry, id = id)
     object = obj.blog.delete()
+    messages.success(request, 'Blog deleted successfully')
     return redirect("/home/table/")
 
 def update_table(request, id):
@@ -74,6 +84,7 @@ def update_table(request, id):
         object.headline = headline
         object.body_text = body_text
         object.save()
+        messages.success(request, 'Blog updated successfully')
         return HttpResponseRedirect("/home/table/")
     data = {}
     data = {"dataset":object}

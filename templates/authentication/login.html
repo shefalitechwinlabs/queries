@@ -2,6 +2,13 @@
 {% block content %}
 
 <form action="{% url 'login' %}" method="POST">
+    {% if messages %}
+    <div class="error alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
     {% csrf_token %}
     {{ error }}
     

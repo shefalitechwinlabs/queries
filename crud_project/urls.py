@@ -20,7 +20,6 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from crud_app.views import profile
 
-
 urlpatterns = [
     path('home/', include('crud_app.urls')),
     path('profile/', profile ,name='profile'), 

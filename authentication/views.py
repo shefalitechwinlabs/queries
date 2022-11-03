@@ -12,7 +12,7 @@ def signup(request):
             password = form.cleaned_data['password']
             user.set_password(password)
             user.save()
-            messages.success(request, f'Your account has been created. You can log in now!')    
+            messages.success(request, 'Profile created. You can log in now!')    
             return redirect('login')
     else:
         form = SignupForm()
@@ -30,10 +30,11 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             request.session['username'] = username
+            messages.success(request, 'loggedin successfully')
             return redirect('home')
         else:
-            context = {'error':'Username or password is incorrect!'}
-            return render (request,'authentication/login.html', context)
+            messages.error(request, 'Username or password is incorrect!')
+            return render(request,'authentication/login.html')
     else:
         return render(request,'authentication/login.html')
   

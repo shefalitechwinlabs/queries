@@ -2,6 +2,13 @@
 
 {% block content %}
 <div class="container">
+    {% if messages %}
+        <div class="success alert alert-success">
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        </div>
+    {% endif %}
     <form method = "post">
         {% csrf_token %}
         {{entry.as_p}}
