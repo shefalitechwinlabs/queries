@@ -1,16 +1,20 @@
 {% extends 'main/base.html' %}
+
 {% load crud_tags %}
+
 {% block content %}
-{% if messages %}
-<div class="success alert alert-success">
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-</div>
-{% endif %}
-{% autoescape on %}
-<h1>Hello! {{name}}</h1>
-<p>Your number of blogs are {{user|blog_count}}</p>
-<p>Latest Blog: {% show_latest_blog user %} </p>
-{% endautoescape %}
+    {% if messages %}
+        <div class="success alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% autoescape on %}
+        <div class="text-center" style="margin-top: 300px;">
+            <h1>Hello! {{name}}</h1>
+            <p>Your number of blogs are {{user|blog_count}}</p>
+            <p>Latest Blog: {% show_latest_blog user %} </p>
+        </div>
+    {% endautoescape %}
 {% endblock %}

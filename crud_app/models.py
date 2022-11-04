@@ -1,9 +1,7 @@
-from datetime import date
 from authentication.models import ExtendUser
 from django.db import models
 from .validators import *
-from django.db.models.signals import post_save
-import datetime
+
 
 class Blog(models.Model):
     blog_name = models.CharField(max_length=100, blank=True, null=True)
@@ -22,6 +20,3 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.pub_date.strftime('%d-%m-%Y')
-        #return self.blog.blog_name
-
-

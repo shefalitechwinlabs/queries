@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from crud_app.models import *
-from authentication.models import Profile, ExtendUser
+from authentication.models import Profile
 from django.shortcuts import get_object_or_404,render,HttpResponseRedirect
 from .forms import *
 from django.contrib import messages
 from django.core.paginator import Paginator
 
+
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
-
 
 def home(request):
     if 'username' in request.session:
@@ -24,7 +23,7 @@ def profile(request):
     if 'username' in request.session:
         context = {}
         profile = Profile.objects.get(name=request.user)
-        fullname = profile.name.first_name +' '+ profile.name.last_name
+        fullname = profile.name.first_name +' '+ profile.name.last_name # Get first and last name from user model
         context = {'dataset': profile, 'fullname': fullname}
         return render(request, 'main/profile.html', context)
 
@@ -35,7 +34,7 @@ def blogform(request):
         if request.method == 'POST':
             blog_form = BlogForm(request.POST)
             if blog_form.is_valid():
-                blog = blog_form.save(commit=False)
+                blog = blog_form.save(commit=False) # If values needs to be changed before execution of save() method
                 blog.created_by = request.user
                 blog.save()
                 messages.success(request, 'Blog created successfully')
@@ -49,21 +48,16 @@ def blogform(request):
         return redirect('/')
 
 def article(request, blog_name):
-    user =  request.user
     article =  Blog.objects.filter(blog_name=blog_name)
     context = {'article':article}
     return render(request, 'main/article.html', context)
 
 def table(request):
     user = request.user
-    entry = Entry.objects.filter(created_by=user)
-    paginator = Paginator(entry,15)
+    entry = Entry.objects.filter(created_by=user).order_by('id')
+    paginator = Paginator(entry,10)
     page_number = request.GET.get('page')
-    print(page_number)
-    try:
-        page_obj = paginator.get_page(page_number)
-    except:
-        page_obj = paginator.page(1)
+    page_obj = paginator.get_page(page_number)
     context = { 'page_obj': page_obj}
     return render(request, 'main/table.html', context)
 

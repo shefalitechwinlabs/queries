@@ -11,44 +11,35 @@
 <div class="container">
     <table class="table table-bordered">
         <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Blog Name</th>
-            <th scope="col">Mod Date</th>
-            <th scope="col">Pub Date</th>
-            <th scope="col">Action</th>
-        </tr>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Blog Name</th>
+                <th scope="col">Mod Date</th>
+                <th scope="col">Pub Date</th>
+                <th scope="col">Action</th>
+            </tr>
         </thead>
         <tbody>
           {% for obj in page_obj %}
-          <tr>
-            <td>{{obj.id}}</td>
-            <td><a href="/home/{{obj.blog.blog_name}}">{{obj.blog.blog_name|upper}}</a></td>
-            <td>{{obj.mod_date|date:"d-m-Y"}}</td>
-            <td>{{obj.pub_date|date:"d-m-Y"}}</td>
-            <td><a type="button" href="/home/updatetable/{{obj.id}}" class="btn btn-outline-success">Update</a>
-            <a type="button" href="/home/delete/{{obj.id}}" class="btn btn-outline-danger">Delete</a></td>
-          </tr>
+            <tr>
+                <td>{{obj.id}}</td>
+                <td><a href="/home/{{obj.blog.blog_name}}">{{obj.blog.blog_name|upper}}</a></td>
+                <td>{{obj.mod_date|date:"d-m-Y"}}</td>
+                <td>{{obj.pub_date|date:"d-m-Y"}}</td>
+                <td><a type="button" href="/home/updatetable/{{obj.id}}" class="btn btn-outline-success">Update</a>
+                <a type="button" href="/home/delete/{{obj.id}}" class="btn btn-outline-danger">Delete</a></td>
+            </tr>
           {% endfor %}
-            
         </tbody>
     </table>
-    <div class="pagination">
-      <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">first</a>
             <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">next</a>
             <a href="?page={{ page_obj.paginator.num_pages }}">last </a>
         {% endif %}
-      </span>
-    </div>
 </div>
-  {% endblock %}
+{% endblock %}

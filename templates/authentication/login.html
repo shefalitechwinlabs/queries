@@ -1,17 +1,16 @@
 {% extends 'authentication/base.html' %}
-{% block content %}
 
+{% block content %}
 <form action="{% url 'login' %}" method="POST">
-    {% if messages %}
-    <div class="error alert alert-success">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    </div>
-    {% endif %}
     {% csrf_token %}
     {{ error }}
-    
+    {% if messages %}
+        <div class="error alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <label for="exampleInputEmail1" class="form-label">Username</label>
     <input type="text" class="form-control" id="exampleInputEmail1" name="username">
 

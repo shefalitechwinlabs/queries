@@ -1,5 +1,6 @@
 from django_cron import CronJobBase, Schedule
 
+
 def MyCronJob():
     # RUN_EVERY_MINS = 1 # every 2 hours
 

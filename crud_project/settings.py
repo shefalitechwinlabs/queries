@@ -33,18 +33,17 @@ AUTH_USER_MODEL = 'authentication.ExtendUser'
 # Application definition
 
 INSTALLED_APPS = [
-    #'jazzmin',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #"django_cron",
     'django_crontab',
     'crud_app.apps.CrudAppConfig',
-    'authentication',
-    
+    'authentication', 
 ]
 
 MIDDLEWARE = [
@@ -55,15 +54,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 
 CRONJOBS = [
     ('*/5 * * * *', 'crud_app.cron.MyCronJob')
 ]
 
-# CRON_CLASSES = [
-#     "crud_app.cron.MyCronJob",
-# ]
+SITE_ID = 1
 
 ROOT_URLCONF = 'crud_project.urls'
 

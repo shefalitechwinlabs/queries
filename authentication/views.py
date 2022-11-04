@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib import auth
-#from .signals import mysignal
 from .forms import SignupForm
+
 
 def signup(request):
     if request.method == 'POST':
@@ -16,12 +16,11 @@ def signup(request):
             return redirect('login')
     else:
         form = SignupForm()
-    #mysignal.send(sender=SignupForm)
     context = {'form': form}
     return render(request, 'authentication/signup.html', context)
 
 def login(request):
-    if "username" in request.session:
+    if 'username' in request.session:
         return redirect('home/')
     if request.method == 'POST':
         username = request.POST['username']
@@ -37,11 +36,9 @@ def login(request):
             return render(request,'authentication/login.html')
     else:
         return render(request,'authentication/login.html')
-  
-  
 
 def logout(request):
     auth.logout(request)
     username = request.session.get('username')
     del username
-    return render (request, 'authentication/logout.html')
+    return render(request, 'authentication/logout.html')

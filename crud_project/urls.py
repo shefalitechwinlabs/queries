@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from crud_app.views import profile
+
 
 urlpatterns = [
     path('home/', include('crud_app.urls')),
@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('admin/', admin.site.urls),
 ]
-handler404 = "crud_app.views.page_not_found_view"
+handler404 = "crud_app.views.page_not_found_view" # Handle 404 error
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
